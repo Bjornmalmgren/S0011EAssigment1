@@ -128,6 +128,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\GameLoop.cpp" />
+    <ClCompile Include="BaseGameEntity.cpp" />
+    <ClCompile Include="FiniteStateMachine.cpp" />
+    <ClCompile Include="Person.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseGameEntity.h" />
+    <ClInclude Include="Job.h" />
+    <ClInclude Include="Person.h" />
+    <ClInclude Include="FiniteStateMachine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
