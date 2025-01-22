@@ -1,15 +1,22 @@
 #pragma once
-#include "Person.h"
-#include <iostream>
-using namespace std;
+class Person;
+
+//#include "Person.h"
+enum States
+{
+	Sleep,Work,Eat,Drink,Social
+};
+
 class State
 {
 
 public:
-	virtual void Enter(Person*) = 0;
-	virtual void Execute(Person*) = 0;
-	virtual void Exit(Person*) = 0;
-
+	virtual void Enter(Person* person) = 0;
+	virtual void Execute(Person* person) = 0;
+	virtual void Exit(Person* person) = 0;
+	int foodCost = 100;
+	int drinkCost = 70;
+	int shovelCost = 130;
 
 };
 
@@ -19,8 +26,8 @@ private:
 
 public:
 	virtual void Enter(Person* person);
-	virtual void Execute(Person* person);
-	virtual void Exit(Person* person);
+	virtual void Execute(Person* person) ;
+	virtual void Exit(Person* person) ;
 };
 
 class State_Eat : public State
@@ -54,6 +61,26 @@ public:
 };
 
 class State_Social : public State
+{
+private:
+public:
+	virtual void Enter(Person* person);
+	virtual void Execute(Person* person);
+	virtual void Exit(Person* person);
+
+};
+
+class State_Idle : public State
+{
+private:
+public:
+	virtual void Enter(Person* person);
+	virtual void Execute(Person* person);
+	virtual void Exit(Person* person);
+
+};
+
+class State_ExtraMoney : public State
 {
 private:
 public:

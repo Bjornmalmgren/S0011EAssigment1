@@ -4,6 +4,7 @@ BaseGameEntity::BaseGameEntity(int id, string newName)
 {
 	setID(id);
 	setName(newName);
+	
 }
 
 void BaseGameEntity::setID(int id) 
@@ -19,6 +20,23 @@ void BaseGameEntity::setID(int id)
 	}
 	
 }
-int BaseGameEntity::getID() {
+
+void BaseGameEntity::setName(string Name)
+{
+	name = Name;
+}
+BaseGameEntity::~BaseGameEntity(){
+
+}
+int BaseGameEntity::getID(){
 	return ID;
+}
+
+string BaseGameEntity::getName() {
+	return name;
+}
+int BaseGameEntity::nextvalidID = 0;
+
+BaseGameEntity::BaseGameEntity() {
+
 }

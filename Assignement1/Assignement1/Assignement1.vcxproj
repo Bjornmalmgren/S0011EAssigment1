@@ -127,13 +127,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\GameLoop.cpp" />
     <ClCompile Include="BaseGameEntity.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
+    <ClCompile Include="GameLoop.cpp" />
+    <ClCompile Include="Jobs.cpp" />
     <ClCompile Include="Person.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseGameEntity.h" />
+    <ClInclude Include="GameLoop.h" />
     <ClInclude Include="Job.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="FiniteStateMachine.h" />

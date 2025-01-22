@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseGameEntity.h"
 #include "FiniteStatemachine.h"
+#include <iostream>
 #include "Job.h"
 class Person : public  BaseGameEntity
 {
@@ -19,22 +20,24 @@ public:
 	void decreaseFood(int amount);
 	int checkDrink();
 	void decreaseDrinks(int amount);
-
+	void increaseDrinks();
+	void increaseFood();
+	void increaseShovels();
+	int checkShovels();
 	void decreaseHunger(float amount);
 	void decreaseThirst(float amount);
 	void decreaseFatigue(float amount);
 
-	void choseJob();
-
+	void increaseMoney(int amount);
+	float checkfatigue();
 	bool isTired = false;
 	bool isHungry = false;
 	bool isThirsty = false;
 	bool needsSocialization = false;
 	Jobs jobs;
-	int currentWork = 1;
 private:
 	
-	State* currentState;
+	State* currentState = new State_Work();
 	float fatigue = 0;
 	float money = 50;
 	float hunger = 30;

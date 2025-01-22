@@ -1,20 +1,46 @@
 #include "Person.h"
-void Person::ChangeState(State* state){
+
+void Person::ChangeState(State* newstate) {
+	/*State* newState = new State_Work();
+	switch (newstate)
+	{
+	case Sleep:
+		newState = new State_Sleep();
+	case Drink:
+		newState = new State_Drink();
+	case Eat:
+		newState = new State_Eat();
+	case Work:
+		newState = new State_Work();
+	case Social:
+		newState = new State_Social();
+	default:
+		break;
+	}
+	*/
 	currentState->Exit(this);
-	currentState = state;
+	currentState = newstate;
 	currentState->Enter(this);
 }
 
 void Person::Update() {
 	
-	thirst++;
-	hunger++;
-	socialization--;
+	//std::cout << "Thirst" << thirst << "Hunger" << hunger << std::endl;
+	thirst += jobs.thirstSpeed;
+	hunger += jobs.hungerSpeed;
+	//socialization--;
 	if (thirst >= 70) {
 		isThirsty = true;
 	}
+	else if(thirst <= 10) {
+		isThirsty = false;
+	}
 	if (hunger >= 80) {
 		isHungry = true;
+	}
+	else if (hunger <= 20)
+	{
+		isHungry = false;
 	}
 	if (socialization <= 20) {
 		needsSocialization = true;
@@ -22,10 +48,18 @@ void Person::Update() {
 	if (fatigue >= 87) {
 		isTired = true;
 	}
+	else if (fatigue <= 23){
+		isTired = false;
+	}
+
+	if (hunger >= 100 || thirst >= 100) {
+		std::cout << "Dead"<<std::endl;
+	}
+	currentState->Execute(this);
 }
 
 void Person::IncreaseFatigue() {
-	fatigue += 2;
+	fatigue += jobs.fatigueSpeed;
 }
 
 int Person::checkMoney() {
@@ -62,18 +96,35 @@ void Person::decreaseThirst(float amount) {
 void Person::decreaseFatigue(float amount) {
 	fatigue -= amount;
 }
+void Person::increaseMoney(int amount) {
+	money += amount;
+}
 
-void Person::choseJob() {
-	srand(time(0));
-	int work = rand() % 2;
-	if (work == 0) {
-		ChangeLocation(jobs.workPlace1);
-		currentWork = 1;
-	}
-	else
-	{
-		ChangeLocation(jobs.workPlace2);
-		currentWork = 2;
-	}
+Person::Person(int id, string newName) {
+	setID(id);
+	name = newName;
+	jobs.selectJobs();
+}
+Person::~Person() {
+
+}
+
+void Person::increaseFood() {
+
+	food++;
+}
+void Person::increaseDrinks() {
+	drinks++;
+}
+
+float Person::checkfatigue() {
+	return fatigue;
+}
+
+void Person::increaseShovels() {
+	shovels++;
+}
+int Person::checkShovels() {
+	return shovels;
 }
 
