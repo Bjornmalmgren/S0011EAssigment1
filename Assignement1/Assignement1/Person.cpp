@@ -1,6 +1,6 @@
 #include "Person.h"
 
-void Person::ChangeState(State* newstate) {
+void Person::ChangeState(State* newstate, std::string nextstate) {
 	/*State* newState = new State_Work();
 	switch (newstate)
 	{
@@ -18,7 +18,12 @@ void Person::ChangeState(State* newstate) {
 		break;
 	}
 	*/
+	//delete previousState;
+	//previousState = currentState;
+
+	nextState = nextstate;
 	currentState->Exit(this);
+	delete currentState;
 	currentState = newstate;
 	currentState->Enter(this);
 }
@@ -29,13 +34,13 @@ void Person::Update() {
 	thirst += jobs.thirstSpeed;
 	hunger += jobs.hungerSpeed;
 	//socialization--;
-	if (thirst >= 70) {
+	if (thirst >= 60) {
 		isThirsty = true;
 	}
 	else if(thirst <= 10) {
 		isThirsty = false;
 	}
-	if (hunger >= 80) {
+	if (hunger >= 70) {
 		isHungry = true;
 	}
 	else if (hunger <= 20)
@@ -54,6 +59,7 @@ void Person::Update() {
 
 	if (hunger >= 100 || thirst >= 100) {
 		std::cout << "Dead"<<std::endl;
+		dead = true;
 	}
 	currentState->Execute(this);
 }
@@ -74,6 +80,7 @@ int Person::checkFood() {
 }
 void Person::decreaseFood(int amount) {
 	food -= amount;
+	if (food >= 0) { food = 0; }
 }
 
 int Person::checkDrink() {
@@ -81,6 +88,7 @@ int Person::checkDrink() {
 }
 void Person::decreaseDrinks(int amount) {
 	drinks -= amount;
+
 }
 
 void Person::ChangeLocation(std::string location) {
@@ -89,9 +97,15 @@ void Person::ChangeLocation(std::string location) {
 
 void Person::decreaseHunger(float amount) {
 	hunger -= amount;
+	if (hunger >= 0) {
+		hunger = 0;
+	}
 }
 void Person::decreaseThirst(float amount) {
 	thirst -= amount;
+	if (thirst >= 0) {
+		thirst = 0;
+	}
 }
 void Person::decreaseFatigue(float amount) {
 	fatigue -= amount;
@@ -128,3 +142,9 @@ int Person::checkShovels() {
 	return shovels;
 }
 
+float Person::checkHunger() {
+	return hunger;
+}
+float Person::checkThirst() {
+	return thirst;
+}

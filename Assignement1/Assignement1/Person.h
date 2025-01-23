@@ -10,7 +10,7 @@ public:
 	Person(int id, std::string newName);
 	~Person();
 	void Update();
-	void ChangeState(State* newState);
+	void ChangeState(State* newState, std::string nextstate);
 	void ChangeLocation(std::string location);
 	std::string checkLocation() { return currentLocation; }
 	void IncreaseFatigue();
@@ -24,10 +24,13 @@ public:
 	void increaseFood();
 	void increaseShovels();
 	int checkShovels();
+	float checkHunger();
+	float checkThirst();
 	void decreaseHunger(float amount);
 	void decreaseThirst(float amount);
 	void decreaseFatigue(float amount);
-
+	bool dead = false;
+	std::string nextState; // only for walking
 	void increaseMoney(int amount);
 	float checkfatigue();
 	bool isTired = false;
@@ -35,9 +38,11 @@ public:
 	bool isThirsty = false;
 	bool needsSocialization = false;
 	Jobs jobs;
+	
 private:
 	
 	State* currentState = new State_Work();
+	State* previousState = new State_Work();
 	float fatigue = 0;
 	float money = 50;
 	float hunger = 30;
