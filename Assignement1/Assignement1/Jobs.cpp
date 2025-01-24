@@ -6,7 +6,6 @@ int Jobs::Payment() {
 void Jobs::selectJobs() {
 	srand(time(0));
 	int randomJob1 = rand() % 6;
-
 	switch (randomJob1)
 	{
 	case 0:
@@ -29,9 +28,9 @@ void Jobs::selectJobs() {
 		job1 = "Police";
 		MPH1 = 26;
 		workPlace1 = "Police station";
-		hungerSpeed = 2;
+		hungerSpeed = 1.8;
 		thirstSpeed = 2;
-		fatigueSpeed = 2.2;
+		fatigueSpeed = 2;
 		break;
 	case 3:
 		job1 = "Teacher";
@@ -43,11 +42,11 @@ void Jobs::selectJobs() {
 		break;
 	case 4:
 		job1 = "Groundskeeper";
-		MPH1 = 29;
+		MPH1 = 30;
 		workPlace1 = "English Mansion";
-		hungerSpeed = 2;
-		thirstSpeed = 2.5;
-		fatigueSpeed = 2.5;
+		hungerSpeed = 1.8;
+		thirstSpeed = 2;
+		fatigueSpeed = 2;
 		break;
 	case 5:
 		job1 = "Butcher";
@@ -55,7 +54,7 @@ void Jobs::selectJobs() {
 		workPlace1 = "Butcher shop";
 		hungerSpeed = 1.8;
 		thirstSpeed = 1.3;
-		fatigueSpeed = 2.2;
+		fatigueSpeed = 2;
 		break;
 	default:
 		break;

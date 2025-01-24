@@ -14,7 +14,7 @@ public:
 	virtual void Enter(Person* person) = 0;
 	virtual void Execute(Person* person) = 0;
 	virtual void Exit(Person* person) = 0;
-	int foodCost = 100;
+	int foodCost = 90;
 	int drinkCost = 70;
 	int shovelCost = 130;
 

@@ -34,13 +34,13 @@ void Person::Update() {
 	thirst += jobs.thirstSpeed;
 	hunger += jobs.hungerSpeed;
 	//socialization--;
-	if (thirst >= 60) {
+	if (thirst >= 55) {
 		isThirsty = true;
 	}
 	else if(thirst <= 10) {
 		isThirsty = false;
 	}
-	if (hunger >= 70) {
+	if (hunger >= 65) {
 		isHungry = true;
 	}
 	else if (hunger <= 20)

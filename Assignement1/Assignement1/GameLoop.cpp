@@ -44,6 +44,11 @@ int main() {
 			}
 			else
 			{
+				std::cout << "Hunger: " << Per.checkHunger();
+				std::cout << " Thirst: " << Per.checkThirst();
+				std::cout << " Fatigue: " << Per.checkfatigue();
+
+				std::cout << " Fatigue: " << Per.checkMoney();
 				Per.Update();
 				
 			}

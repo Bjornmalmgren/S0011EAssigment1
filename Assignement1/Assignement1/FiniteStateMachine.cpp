@@ -137,7 +137,7 @@ void State_Work::Execute(Person* person) {
 		std::cout << person->name << " is tired" << endl;
 		//say something
 	}
-	else if (person->isHungry&& person->checkMoney() > 200) {
+	else if (person->isHungry&& person->checkMoney() > foodCost) {
 		if (person->checkFood() <= 0) {
 			person->ChangeState(new State_Walking, "Eat");
 			person->ChangeLocation("Store");
@@ -149,7 +149,7 @@ void State_Work::Execute(Person* person) {
 		std::cout << person->name << " needs to eat" << endl;
 		//say something
 	}
-	else if (person->isThirsty && person->checkMoney() > 140) {
+	else if (person->isThirsty && person->checkMoney() > drinkCost) {
 		if (person->checkDrink() <= 0) {
 			person->ChangeState(new State_Walking, "Drink");
 
@@ -188,7 +188,10 @@ void State_Drink::Execute(Person* person) {
 		person->ChangeLocation("Store");
 		person->decreaseMoney(drinkCost);
 		person->decreaseThirst(40);
-		if (person->checkMoney() > drinkCost && person->checkDrink() < 2) {
+		if (person->checkMoney() > foodCost && person->isHungry) {
+			person->ChangeState(new State_Eat, "Eat");
+		}
+		else if (person->checkMoney() > drinkCost && person->checkDrink() < 2) {
 			std::cout << person->name << " is stockpiling some drinks" << endl;
 			person->decreaseMoney(drinkCost);
 			person->increaseDrinks();
