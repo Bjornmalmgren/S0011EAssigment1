@@ -33,7 +33,7 @@ void Person::Update() {
 	//std::cout << "Thirst" << thirst << "Hunger" << hunger << std::endl;
 	thirst += jobs.thirstSpeed;
 	hunger += jobs.hungerSpeed;
-	//socialization--;
+	socialization--;
 	if (thirst >= 55) {
 		isThirsty = true;
 	}
@@ -47,8 +47,12 @@ void Person::Update() {
 	{
 		isHungry = false;
 	}
-	if (socialization <= 20) {
+	if (socialization <= 40) {
 		needsSocialization = true;
+	}
+	else if(socialization >= 90)
+	{
+
 	}
 	if (fatigue >= 87) {
 		isTired = true;
@@ -148,3 +152,8 @@ float Person::checkHunger() {
 float Person::checkThirst() {
 	return thirst;
 }
+
+bool Person::OnMessage(const Telegram& msg) {
+	latestMessage = msg.message;
+}
+

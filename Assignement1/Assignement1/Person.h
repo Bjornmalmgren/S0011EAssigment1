@@ -37,8 +37,11 @@ public:
 	bool isHungry = false;
 	bool isThirsty = false;
 	bool needsSocialization = false;
+	bool invitedToSocial = false;
+	enum Telegram::message latestMessage;
 	Jobs jobs;
-	
+	bool OnMessage(const Telegram& msg);
+	MessageDispatcher dispatch;
 private:
 	
 	State* currentState = new State_Work();

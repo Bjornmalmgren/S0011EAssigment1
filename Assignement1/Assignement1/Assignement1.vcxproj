@@ -128,17 +128,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseGameEntity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="Jobs.cpp" />
+    <ClCompile Include="MessageDispatcher.cpp" />
     <ClCompile Include="Person.cpp" />
+    <ClCompile Include="Telegram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseGameEntity.h" />
+    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="GameLoop.h" />
     <ClInclude Include="Job.h" />
+    <ClInclude Include="MessageDispatcher.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="FiniteStateMachine.h" />
+    <ClInclude Include="Telegram.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

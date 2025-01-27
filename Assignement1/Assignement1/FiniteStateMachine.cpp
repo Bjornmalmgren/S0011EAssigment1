@@ -39,6 +39,7 @@ void State_Sleep::Execute(Person* BGE) {
 	else if(person->needsSocialization)
 	{
 			person->ChangeState(new State_Social, "Social");
+			person->dispatch.dispatchMessage(0, person->getID(), person->dispatch.entityMG.GetEntityFromId(1));
 	}
 	else if(person->isTired != true)
 	{
