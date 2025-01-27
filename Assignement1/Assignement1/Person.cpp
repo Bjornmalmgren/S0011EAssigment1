@@ -52,7 +52,7 @@ void Person::Update() {
 	}
 	else if(socialization >= 90)
 	{
-
+		needsSocialization = false;
 	}
 	if (fatigue >= 87) {
 		isTired = true;
@@ -65,7 +65,11 @@ void Person::Update() {
 		std::cout << "Dead"<<std::endl;
 		dead = true;
 	}
-	currentState->Execute(this);
+	else
+	{
+		currentState->Execute(this);
+	}
+	
 }
 
 void Person::IncreaseFatigue() {
@@ -153,7 +157,10 @@ float Person::checkThirst() {
 	return thirst;
 }
 
-bool Person::OnMessage(const Telegram& msg) {
-	latestMessage = msg.message;
+bool Person::OnMessage(Telegram& msg) {
+	latestMessage = msg.getMessge();
+	return true;
 }
+
+
 

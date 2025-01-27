@@ -38,10 +38,10 @@ public:
 	bool isThirsty = false;
 	bool needsSocialization = false;
 	bool invitedToSocial = false;
-	enum Telegram::message latestMessage;
+	enum message latestMessage;
 	Jobs jobs;
-	bool OnMessage(const Telegram& msg);
-	MessageDispatcher dispatch;
+	bool OnMessage(Telegram& msg);
+	std::list<Person> people;
 private:
 	
 	State* currentState = new State_Work();

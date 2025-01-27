@@ -1,8 +1,8 @@
-#pragma once
-#include "Telegram.h"
-#include "EntityManager.h"
+//#pragma once
+//#include "Telegram.h"
 #include <set>
 #include <chrono>
+#include "EntityManager.h"
 class MessageDispatcher
 {
 private:
@@ -11,10 +11,9 @@ private:
 	
 	
 public:
-	EntityManager entityMG;
 	MessageDispatcher();
 	static MessageDispatcher* Instance();
-	void dispatchMessage(double delay, int sender, int reciver, enum Telegram::message message, void* extraInfo);
+	void dispatchMessage(double delay, int sender, int reciver, enum message message, void* extraInfo);
 };
-#define Dispatch MessageDispatcher::Instance();
+#define MsgD MessageDispatcher::Instance()
 

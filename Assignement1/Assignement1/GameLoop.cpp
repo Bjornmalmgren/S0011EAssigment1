@@ -2,11 +2,13 @@
 
 
 int main() {
-	
+	std::list<Person> people;
 	long long tick = 0.0;
 	int TPS = 500;
 	const long long TPSDuration = 1000000000.0/TPS;
 	Person Per = Person(0, "Per");
+	people.push_back(Per);
+	EntityMgr->registerEntity(&Per);
 	bool isTrue = true;
 	int amountOfTicks = 0;
 	auto time = std::chrono::system_clock::now();
@@ -36,25 +38,25 @@ int main() {
 				std::cout << "[00:" << t << "] ";
 			}*/
 			std::cout << "[ " << amountOfTicks << " ]";
-			if (Per.dead == true) {
-				
-				std::cout << "Hunger: " << Per.checkHunger();
-				std::cout << " Thirst: " << Per.checkThirst();
-				std::cout << " Fatigue: " << Per.checkfatigue();
-			}
-			else
+			for (Person p : people)
 			{
-				std::cout << "Hunger: " << Per.checkHunger();
-				std::cout << " Thirst: " << Per.checkThirst();
-				std::cout << " Fatigue: " << Per.checkfatigue();
+				if ( p.dead == true) {
 
-				std::cout << " Fatigue: " << Per.checkMoney();
-				Per.Update();
-				
+					std::cout << "Hunger: " << p.checkHunger();
+					std::cout << " Thirst: " << p.checkThirst();
+					std::cout << " Fatigue: " << p.checkfatigue();
+				}
+				else
+				{
+
+					p.Update();
+					std::cout << "  |";
+				}
 			}
 			
+			
 		}
-		
+		std::cout << endl;
 	}
 	return 0;
 }

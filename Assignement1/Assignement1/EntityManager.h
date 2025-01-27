@@ -1,6 +1,6 @@
 #pragma once
 #include <map>
-#include "BaseGameEntity.h"
+#include "Person.h"   
 class EntityManager
 {
 private:
@@ -8,15 +8,14 @@ private:
 private:
 
 	EntityMap entityMap;
-	EntityManager();
-	EntityManager(const EntityManager&);
-	EntityManager& operator=(const EntityManager&);
+	
+	
 public:
+	EntityManager();
 	static EntityManager* Instance();
-
 	void registerEntity(BaseGameEntity* newEntity);
 
 	BaseGameEntity* GetEntityFromId(int id);
 	void removeeEntity(BaseGameEntity* entity);
 };
-#define EnityMgr EntityManager::Instance();
+#define EntityMgr EntityManager::Instance()

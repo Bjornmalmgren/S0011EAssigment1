@@ -17,7 +17,7 @@ public:
 	int foodCost = 90;
 	int drinkCost = 70;
 	int shovelCost = 130;
-
+	
 };
 
 class State_Sleep : public State
@@ -28,6 +28,7 @@ public:
 	virtual void Enter(Person* person);
 	virtual void Execute(Person* person) ;
 	virtual void Exit(Person* person) ;
+
 };
 
 class State_Eat : public State

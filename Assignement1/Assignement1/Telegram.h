@@ -1,25 +1,26 @@
 #pragma once
-
+enum message
+{
+	inviteToSocialize,
+	canMakeIt,
+	cantMakeIt
+};
 
 class Telegram
 {
 	int sender;
 	int reciver;
-	
+	message message;
 	double dispatchTime;
 	void* extraInfo;
-	enum message
-	{
-		inviteToSocialize,
-		canMakeIt,
-		cantMakeIt
-	};
+	
 public:
-	message message;
+	
+	enum message getMessge();
 	Telegram();
-	Telegram(int Sender, int Reciver, enum Telegram::message Message, double DT, void* ExtraInfo);
-	~Telegram();
+	Telegram(int Sender, int Reciver, enum message Message, double DT, void* ExtraInfo);
+	//~Telegram();
 	
-	
+
 };
 

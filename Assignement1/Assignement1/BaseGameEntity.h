@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include "MessageDispatcher.h"
+#include <list>
+#include "Telegram.h"
 using namespace std;
 class BaseGameEntity
 {
@@ -9,6 +10,7 @@ public:
 	string name;
 	static int nextvalidID;
 	BaseGameEntity(int id, string newName);
+
 	BaseGameEntity();
 	virtual ~BaseGameEntity();
 	void setID(int id);
@@ -16,7 +18,7 @@ public:
 	int getID();
 	string getName();
 	virtual void Update() = 0;
-	virtual bool OnMessage(const Telegram& msg) = 0;
+	virtual bool OnMessage(Telegram& msg) = 0;
 private:
 
 };
