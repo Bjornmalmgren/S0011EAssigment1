@@ -7,7 +7,7 @@ class Person : public  BaseGameEntity
 {
 public:
 	std::string name;
-	Person(int id, std::string newName);
+	Person(int id, std::string newName, int i);
 	~Person();
 	void Update();
 	void ChangeState(State* newState, std::string nextstate);
@@ -32,16 +32,19 @@ public:
 	bool dead = false;
 	std::string nextState; // only for walking
 	void increaseMoney(int amount);
+	void increaseSocial(int amount);
 	float checkfatigue();
 	bool isTired = false;
 	bool isHungry = false;
 	bool isThirsty = false;
 	bool needsSocialization = false;
 	bool invitedToSocial = false;
+	float checkSocial();
 	enum message latestMessage;
 	Jobs jobs;
-	bool OnMessage(Telegram& msg);
+	bool OnMessage(const Telegram& msg);
 	std::list<Person> people;
+	bool operator==(const Person& p);
 private:
 	
 	State* currentState = new State_Work();

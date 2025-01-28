@@ -10,12 +10,12 @@ class Telegram
 {
 	int sender;
 	int reciver;
-	message message;
+	
 	double dispatchTime;
 	void* extraInfo;
 	
 public:
-	
+	message message;
 	enum message getMessge();
 	Telegram();
 	Telegram(int Sender, int Reciver, enum message Message, double DT, void* ExtraInfo);

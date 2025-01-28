@@ -22,3 +22,19 @@ BaseGameEntity* EntityManager::GetEntityFromId(int id) {
 	return entityMap[id];
 }
 
+int EntityManager::mapsSize() {
+	return entityMap.size();
+	
+}
+
+int EntityManager::getIdFromEntity(int i) {
+	if (i <= entityMap.size() - 1) {
+		return entityMap[i]->getID();
+	}
+	else
+	{
+		return 0;
+	}
+	
+}
+

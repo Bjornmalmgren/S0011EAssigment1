@@ -6,7 +6,7 @@
 class Jobs
 {
 public:
-	void selectJobs();
+	void selectJobs(int i);
 	int Payment();
 	std::string job1;
 	int MPH1;

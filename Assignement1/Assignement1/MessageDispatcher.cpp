@@ -19,5 +19,5 @@ void MessageDispatcher::dispatchMessage(double delay, int sender, int reciver, e
 }
 
 void MessageDispatcher::discharge(BaseGameEntity* pReciver, const Telegram& msg) {
-
+	pReciver->OnMessage(msg);
 }

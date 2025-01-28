@@ -14,8 +14,9 @@ public:
 	EntityManager();
 	static EntityManager* Instance();
 	void registerEntity(BaseGameEntity* newEntity);
-
+	int mapsSize();
 	BaseGameEntity* GetEntityFromId(int id);
 	void removeeEntity(BaseGameEntity* entity);
+	int getIdFromEntity(int i);
 };
 #define EntityMgr EntityManager::Instance()

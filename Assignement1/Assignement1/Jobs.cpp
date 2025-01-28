@@ -3,8 +3,10 @@
 int Jobs::Payment() {
 	return MPH1;
 }
-void Jobs::selectJobs() {
+void Jobs::selectJobs(int i) {
 	srand(time(0));
+	int addon = rand() % 6;
+	srand(i+addon);
 	int randomJob1 = rand() % 6;
 	switch (randomJob1)
 	{
@@ -29,7 +31,7 @@ void Jobs::selectJobs() {
 		MPH1 = 26;
 		workPlace1 = "Police station";
 		hungerSpeed = 1.8;
-		thirstSpeed = 2;
+		thirstSpeed = 1.8;
 		fatigueSpeed = 2;
 		break;
 	case 3:

@@ -31,9 +31,7 @@ void Person::ChangeState(State* newstate, std::string nextstate) {
 void Person::Update() {
 	
 	//std::cout << "Thirst" << thirst << "Hunger" << hunger << std::endl;
-	thirst += jobs.thirstSpeed;
-	hunger += jobs.hungerSpeed;
-	socialization--;
+	
 	if (thirst >= 55) {
 		isThirsty = true;
 	}
@@ -67,7 +65,11 @@ void Person::Update() {
 	}
 	else
 	{
+		
 		currentState->Execute(this);
+		thirst += jobs.thirstSpeed;
+		hunger += jobs.hungerSpeed;
+		socialization--;
 	}
 	
 }
@@ -122,10 +124,10 @@ void Person::increaseMoney(int amount) {
 	money += amount;
 }
 
-Person::Person(int id, string newName) {
+Person::Person(int id, string newName, int i) {
 	setID(id);
 	name = newName;
-	jobs.selectJobs();
+	jobs.selectJobs(i);
 }
 Person::~Person() {
 
@@ -157,9 +159,37 @@ float Person::checkThirst() {
 	return thirst;
 }
 
-bool Person::OnMessage(Telegram& msg) {
-	latestMessage = msg.getMessge();
+bool Person::OnMessage(const Telegram& msg) {
+	switch (msg.message)
+	{
+	case inviteToSocialize:
+		ChangeState(new State_Walking, "Social");
+		break;
+	case canMakeIt:
+		break;
+	case cantMakeIt:
+		break;
+	default:
+		break;
+	}
 	return true;
+}
+
+void Person::increaseSocial(int amount) {
+	socialization += amount;
+}
+float Person::checkSocial() {
+	return socialization;
+}
+
+bool Person::operator==(const Person& p) {
+	if (ID == p.ID && name == p.name) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 

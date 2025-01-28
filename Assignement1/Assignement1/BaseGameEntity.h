@@ -18,7 +18,7 @@ public:
 	int getID();
 	string getName();
 	virtual void Update() = 0;
-	virtual bool OnMessage(Telegram& msg) = 0;
+	virtual bool OnMessage(const Telegram& msg) = 0;
 private:
 
 };

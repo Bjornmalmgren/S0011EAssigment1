@@ -4,19 +4,34 @@
 int main() {
 	std::list<Person> people;
 	long long tick = 0.0;
-	int TPS = 500;
+	int TPS = 1;
 	const long long TPSDuration = 1000000000.0/TPS;
-	Person Per = Person(0, "Per");
-	people.push_back(Per);
-	EntityMgr->registerEntity(&Per);
+	
+
+
 	bool isTrue = true;
 	int amountOfTicks = 0;
 	auto time = std::chrono::system_clock::now();
 	auto startTime = std::chrono::system_clock::now();
 	auto lastTime = std::chrono::system_clock::now();
 	auto currentTime = lastTime;
-	
+	Person Per = Person(0, "Per", 2);
+	people.push_back(Per);
+	EntityMgr->registerEntity(&Per);
+
+	Person Erika = Person(1, "Erika", 19);
+	people.push_back(Erika);
+	EntityMgr->registerEntity(&Erika);
+
+	Person Lena = Person(2, "Lena", 7);
+	people.push_back(Lena);
+	EntityMgr->registerEntity(&Lena);
+
+	Person Bob = Person(3, "Bob", 9);
+	people.push_back(Bob);
+	EntityMgr->registerEntity(&Bob);
 	double deltaTime = 0.0;
+	
 	while (isTrue)
 	{
 		currentTime = std::chrono::system_clock::now();
@@ -40,23 +55,37 @@ int main() {
 			std::cout << "[ " << amountOfTicks << " ]";
 			for (Person p : people)
 			{
-				if ( p.dead == true) {
+				Person* P = (Person*)EntityMgr->GetEntityFromId(p.getID());
+				if (P != nullptr) {
+					if (P->dead == true) {
 
-					std::cout << "Hunger: " << p.checkHunger();
-					std::cout << " Thirst: " << p.checkThirst();
-					std::cout << " Fatigue: " << p.checkfatigue();
-				}
-				else
-				{
 
-					p.Update();
-					std::cout << "  |";
+					}
+					else
+					{
+
+						P->Update();
+						if (P->dead == true) {
+							std::cout << P->name << " is dead";
+							std::cout << " H: " << P->checkHunger();
+							std::cout << " T: " << P->checkThirst();
+							std::cout << " F: " << P->checkfatigue();
+							std::cout << " S: " << P->checkSocial();
+							std::cout << " M: " << P->checkMoney();
+							int tID = P->ID;
+							EntityMgr->removeeEntity(&p);
+							
+
+						}
+						std::cout << "  |";
+					}
 				}
+				
 			}
 			
-			
+			std::cout << endl;
 		}
-		std::cout << endl;
+		
 	}
 	return 0;
 }
