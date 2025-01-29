@@ -37,12 +37,12 @@ void State_Sleep::Execute(Person* person) {
 			person->ChangeState(new State_Drink, "Drink");
 		}
 	}
-	else if(person->needsSocialization)
+	else if(person->needsSocialization && person->checkMoney() > 100)
 	{
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
 		{
 			person->ChangeLocation("Resturant");
-			MsgD->dispatchMessage(0, person->getID(), EntityMgr->getIdFromEntity(i), inviteToSocialize, 0);
+			MsgD->dispatchMessage(0, person->getID(), person->people[i], inviteToSocialize, 0);
 		}
 			
 	}
@@ -115,12 +115,12 @@ void State_Eat::Execute(Person* person) {
 		std::cout << person->name << "is going to buy some drinks " ;
 		person->ChangeState(new State_Drink, "Drink");
 	}
-	else if (person->needsSocialization) {
+	else if (person->needsSocialization && person->checkMoney() > 100) {
 		std::cout << person->name << "is going to Socialize ";
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
 		{
 			person->ChangeLocation("Resturant");
-			MsgD->dispatchMessage(0, person->getID(), EntityMgr->getIdFromEntity(i), inviteToSocialize, 0);
+			MsgD->dispatchMessage(0, person->getID(), person->people[i], inviteToSocialize, 0);
 		}
 	}
 	else
@@ -153,14 +153,15 @@ void State_Work::Execute(Person* person) {
 		std::cout << person->name << " made: " << person->jobs.Payment() << " working at " << person->jobs.workPlace1 << " ";
 	}
 	else if (person->isTired) {
-		
+		std::cout << person->name << " is tired ";
 		person->ChangeLocation("Home");
 		person->ChangeState(new State_Walking, "Sleep");
 		
-		std::cout << person->name << " is tired " ;
+		
 		//say something
 	}
 	else if (person->isHungry&& person->checkMoney() > foodCost && person->checkHunger() > person->checkThirst()) {
+		std::cout << person->name << " needs to eat ";
 		if (person->checkFood() <= 0) {
 			person->ChangeState(new State_Walking, "Eat");
 			person->ChangeLocation("Store");
@@ -169,10 +170,11 @@ void State_Work::Execute(Person* person) {
 		{
 			person->ChangeState(new State_Eat, "Eat");
 		}
-		std::cout << person->name << " needs to eat " ;
+		
 		//say something
 	}
-	else if (person->isThirsty && person->checkMoney() > drinkCost && person->checkHunger() < person->checkThirst()) {
+	else if (person->isThirsty && person->checkMoney() > drinkCost) {
+		std::cout << person->name << " needs to drink ";
 		if (person->checkDrink() <= 0) {
 			person->ChangeState(new State_Walking, "Drink");
 
@@ -182,15 +184,16 @@ void State_Work::Execute(Person* person) {
 		{
 			person->ChangeState(new State_Drink, "Drink");
 		}
-		std::cout << person->name << " needs to drink ";
+		
 		//say something
 	}
-	else if (person->needsSocialization) {
+	else if (person->needsSocialization && person->checkMoney() > 100) {
 		//for (int i = 0; i < EntityMgr->mapsSize(); i++)
+		std::cout << person->name << " is going to socialize ";
 		for(int i = 0; i < EntityMgr->mapsSize(); i++)
 		{
 			person->ChangeLocation("Resturant");
-			MsgD->dispatchMessage(0, person->getID(),EntityMgr->getIdFromEntity(i), inviteToSocialize, 0);
+			MsgD->dispatchMessage(0, person->getID(), person->people[i], inviteToSocialize, 0);
 		}
 	}
 	else
@@ -247,7 +250,11 @@ void State_Drink::Execute(Person* person) {
 			person->ChangeState(new State_Work, "Work");
 		}
 	}
-	else if (person->checkMoney() < 200)
+	else if (person->isHungry) {
+		std::cout << person->name << " needs to eat ";
+		person->ChangeState(new State_Eat, "Eat");
+	}
+	else if (person->checkMoney() < drinkCost)
 	{
 		std::cout << person->name << " is going to work at " << person->jobs.workPlace1 << " ";
 		if (person->checkLocation() != person->jobs.workPlace1) {
@@ -259,14 +266,13 @@ void State_Drink::Execute(Person* person) {
 			person->ChangeState(new State_Work, "Work");
 		}
 	}
-	else if (person->isHungry) {
-		person->ChangeState(new State_Eat, "Eat");
-	}
-	else if (person->needsSocialization) {
+	else if (person->needsSocialization && person->checkMoney() > 100) {
+		std::cout << person->name << " is going to socialize " ;
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
 		{
+			
 			person->ChangeLocation("Resturant");
-			MsgD->dispatchMessage(0, person->getID(), EntityMgr->getIdFromEntity(i), inviteToSocialize, 0);
+			MsgD->dispatchMessage(0, person->getID(), person->people[i], inviteToSocialize, 0);
 		}
 	}
 	else
@@ -292,7 +298,14 @@ void State_Social::Enter(Person* person) {
 
 }
 void State_Social::Execute(Person* person) {
-	person->increaseSocial(7);
+	if (person->peopleToSocializeWith > 0) {
+		person->increaseSocial(3 * person->peopleToSocializeWith);
+	}
+	else
+	{
+		person->increaseSocial(2.5);
+	}
+	
 	std::cout << person->name << ", is hanging out with friends ";
 	if (person->isHungry) {
 		if (person->checkFood() > 0) {
@@ -374,24 +387,24 @@ void State_Idle::Execute(Person* person) {
 		}
 		
 	}
-	else if(person->checkMoney() > 130)
-	{
-		std::cout << person->name << "is going to the store ";
-		person->ChangeLocation("Store");
-		person->ChangeState(new State_Walking, "EM");
-
-	}
 	else if (person->isTired) {
 		std::cout << person->name << " is tired time to sleep ";
 		person->ChangeState(new State_Sleep, "Sleep");
 	}
-	else if (person->needsSocialization) {
+	else if (person->needsSocialization && person->checkMoney() > 100) {
 		std::cout << person->name << "is going to socialize ";
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
 		{
 			person->ChangeLocation("Resturant");
-			MsgD->dispatchMessage(0, person->getID(), EntityMgr->getIdFromEntity(i), inviteToSocialize, 0);
+			MsgD->dispatchMessage(0, person->getID(), person->people[i], inviteToSocialize, 0);
 		}
+	}
+	else if(person->checkMoney() > 130)
+	{
+		std::cout << person->name << " is going to the store ";
+		person->ChangeLocation("Store");
+		person->ChangeState(new State_Walking, "EM");
+
 	}
 	else
 	{
@@ -440,12 +453,12 @@ void State_ExtraMoney::Execute(Person* person) {
 
 
 	}
-	else if (person->needsSocialization) {
+	else if (person->needsSocialization && person->checkMoney() > 100) {
 		std::cout << person->name << "is going to socialize ";
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
 		{
 			person->ChangeLocation("Resturant");
-			MsgD->dispatchMessage(0, person->getID(), EntityMgr->getIdFromEntity(i), inviteToSocialize, 0);
+			MsgD->dispatchMessage(0, person->getID(), person->people[i], inviteToSocialize, 0);
 		}
 	}
 	else
@@ -474,8 +487,30 @@ void State_ExtraMoney::Exit(Person* person) {
  void State_Walking::Execute(Person* person) {
 	 distance--;
 	 std::cout << person->name << " is walking to " << person->checkLocation() << " ";
-	 
-	 if (distance <= 0) {
+	 if (person->nextState == "Social" && person->isHungry) {
+		 if (person->checkFood() > 0) {
+			 person->ChangeState(new State_Eat, "Eat");
+		 }
+		 else
+		 {
+			 person->ChangeState(new State_Walking, "Eat");
+			 person->ChangeLocation("Store");
+		 }
+		 
+	 }
+	 else if (person->nextState == "Social" && person->isThirsty) {
+		 if (person->checkDrink() > 0) {
+			 person->ChangeState(new State_Drink, "Drink");
+		 }
+		 else
+		 {
+			 person->ChangeState(new State_Walking, "Drink");
+			 person->ChangeLocation("Store");
+		 }
+		 
+		 
+	 }
+	 else if (distance <= 0) {
 		 distance = 5;
 		 if (person->nextState == "Drink") {
 

@@ -1,4 +1,5 @@
 #include "Person.h"
+#include "MessageDispatcher.h"
 
 void Person::ChangeState(State* newstate, std::string nextstate) {
 	/*State* newState = new State_Work();
@@ -31,14 +32,13 @@ void Person::ChangeState(State* newstate, std::string nextstate) {
 void Person::Update() {
 	
 	//std::cout << "Thirst" << thirst << "Hunger" << hunger << std::endl;
-	
-	if (thirst >= 55) {
+	if (thirst >= 51) {
 		isThirsty = true;
 	}
 	else if(thirst <= 10) {
 		isThirsty = false;
 	}
-	if (hunger >= 65) {
+	if (hunger >= 61) {
 		isHungry = true;
 	}
 	else if (hunger <= 20)
@@ -48,7 +48,7 @@ void Person::Update() {
 	if (socialization <= 40) {
 		needsSocialization = true;
 	}
-	else if(socialization >= 90)
+	else if(socialization >= 80)
 	{
 		needsSocialization = false;
 	}
@@ -163,9 +163,34 @@ bool Person::OnMessage(const Telegram& msg) {
 	switch (msg.message)
 	{
 	case inviteToSocialize:
-		ChangeState(new State_Walking, "Social");
+		if (isHungry == true || isThirsty == true || money < 100) {
+			for (int i = 0; i < EntityMgr->mapsSize(); i++)
+			{
+				if (people[i] != ID) {
+					MsgD->dispatchMessage(0, getID(), people[i], cantMakeIt, 0);
+				}
+				
+			}
+		}
+		else
+		{
+			for (int i = 0; i < EntityMgr->mapsSize(); i++)
+			{
+				if (people[i] != ID) {
+					MsgD->dispatchMessage(0, getID(), people[i], canMakeIt, 0);
+				}
+
+			}
+			if ((currentState != new State_Social) && nextState != "Social") {
+				ChangeLocation("Resturant");
+				ChangeState(new State_Walking, "Social");
+			}
+			
+			peopleToSocializeWith = 0;
+		}
 		break;
 	case canMakeIt:
+		peopleToSocializeWith += 1;
 		break;
 	case cantMakeIt:
 		break;
@@ -175,22 +200,13 @@ bool Person::OnMessage(const Telegram& msg) {
 	return true;
 }
 
-void Person::increaseSocial(int amount) {
+void Person::increaseSocial(float amount) {
 	socialization += amount;
 }
 float Person::checkSocial() {
 	return socialization;
 }
 
-bool Person::operator==(const Person& p) {
-	if (ID == p.ID && name == p.name) {
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
 
 
 

@@ -2,6 +2,7 @@
 #include <string>
 #include <list>
 #include "Telegram.h"
+#include <vector>
 using namespace std;
 class BaseGameEntity
 {
@@ -19,6 +20,7 @@ public:
 	string getName();
 	virtual void Update() = 0;
 	virtual bool OnMessage(const Telegram& msg) = 0;
+	std::vector<int> people;
 private:
 
 };

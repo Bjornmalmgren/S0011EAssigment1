@@ -98,7 +98,7 @@ public:
 	virtual void Enter(Person* person);
 	virtual void Execute(Person* person);
 	virtual void Exit(Person* person);
-	int distance = 5;
+	int distance = 3;
 };
 
 

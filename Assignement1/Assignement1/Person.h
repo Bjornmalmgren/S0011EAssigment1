@@ -3,6 +3,7 @@
 #include "FiniteStatemachine.h"
 #include <iostream>
 #include "Job.h"
+class MessageDispatcher;
 class Person : public  BaseGameEntity
 {
 public:
@@ -32,7 +33,7 @@ public:
 	bool dead = false;
 	std::string nextState; // only for walking
 	void increaseMoney(int amount);
-	void increaseSocial(int amount);
+	void increaseSocial(float amount);
 	float checkfatigue();
 	bool isTired = false;
 	bool isHungry = false;
@@ -43,8 +44,8 @@ public:
 	enum message latestMessage;
 	Jobs jobs;
 	bool OnMessage(const Telegram& msg);
-	std::list<Person> people;
-	bool operator==(const Person& p);
+	std::vector<int> people;
+	int peopleToSocializeWith = 0;
 private:
 	
 	State* currentState = new State_Work();

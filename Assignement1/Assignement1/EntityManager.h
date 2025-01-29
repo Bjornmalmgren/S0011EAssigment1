@@ -9,7 +9,6 @@ private:
 
 	EntityMap entityMap;
 	
-	
 public:
 	EntityManager();
 	static EntityManager* Instance();

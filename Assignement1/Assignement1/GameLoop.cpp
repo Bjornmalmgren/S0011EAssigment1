@@ -2,9 +2,9 @@
 
 
 int main() {
-	std::list<Person> people;
+	std::vector<int> people;
 	long long tick = 0.0;
-	int TPS = 1;
+	int TPS = 500;
 	const long long TPSDuration = 1000000000.0/TPS;
 	
 
@@ -16,22 +16,30 @@ int main() {
 	auto lastTime = std::chrono::system_clock::now();
 	auto currentTime = lastTime;
 	Person Per = Person(0, "Per", 2);
-	people.push_back(Per);
+	people.push_back(Per.ID);
 	EntityMgr->registerEntity(&Per);
+	
 
 	Person Erika = Person(1, "Erika", 19);
-	people.push_back(Erika);
+	people.push_back(Erika.ID);
 	EntityMgr->registerEntity(&Erika);
 
 	Person Lena = Person(2, "Lena", 7);
-	people.push_back(Lena);
+	people.push_back(Lena.ID);
 	EntityMgr->registerEntity(&Lena);
 
 	Person Bob = Person(3, "Bob", 9);
-	people.push_back(Bob);
+	people.push_back(Bob.ID);
 	EntityMgr->registerEntity(&Bob);
 	double deltaTime = 0.0;
-	
+
+	for (int i = 0; i < people.size(); i++)
+	{
+		Person* b = (Person*)EntityMgr->GetEntityFromId(people[i]);
+		
+		b->people.reserve(people.size());
+		b->people = people;
+	}
 	while (isTrue)
 	{
 		currentTime = std::chrono::system_clock::now();
@@ -53,34 +61,44 @@ int main() {
 				std::cout << "[00:" << t << "] ";
 			}*/
 			std::cout << "[ " << amountOfTicks << " ]";
-			for (Person p : people)
+			for (int i = 0; i< EntityMgr->mapsSize();i++)
 			{
-				Person* P = (Person*)EntityMgr->GetEntityFromId(p.getID());
-				if (P != nullptr) {
+				int p = people[i];
+				Person* P = (Person*)EntityMgr->GetEntityFromId(p);
+				if (P->dead == true) {
+
+
+				}
+				else
+				{
+
+					P->Update();
 					if (P->dead == true) {
-
-
-					}
-					else
-					{
-
-						P->Update();
-						if (P->dead == true) {
-							std::cout << P->name << " is dead";
-							std::cout << " H: " << P->checkHunger();
-							std::cout << " T: " << P->checkThirst();
-							std::cout << " F: " << P->checkfatigue();
-							std::cout << " S: " << P->checkSocial();
-							std::cout << " M: " << P->checkMoney();
-							int tID = P->ID;
-							EntityMgr->removeeEntity(&p);
-							
-
+						std::cout << P->name << " is dead";
+						std::cout << " H: " << P->checkHunger();
+						std::cout << " T: " << P->checkThirst();
+						std::cout << " F: " << P->checkfatigue();
+						std::cout << " S: " << P->checkSocial();
+						std::cout << " M: " << P->checkMoney();
+						int tID = P->ID;
+						EntityMgr->removeeEntity(EntityMgr->GetEntityFromId(P->ID));
+						people.erase(people.begin() + i);
+						for (int i = 0; i < people.size(); i++)
+						{
+							Person* b = (Person*)EntityMgr->GetEntityFromId(people[i]);
+							b->people.reserve(people.size());
+							b->people = people;
 						}
-						std::cout << "  |";
+						
+
 					}
+					std::cout << "  |";
 				}
 				
+				
+			}
+			if (people.size() == 0) {
+				isTrue = false;
 			}
 			
 			std::cout << endl;
