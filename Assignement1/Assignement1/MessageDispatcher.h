@@ -6,7 +6,6 @@
 class MessageDispatcher
 {
 private:
-	std::set<Telegram> PriorityQue;
 	void discharge(BaseGameEntity* pReciver, const Telegram& msg);
 	
 	
