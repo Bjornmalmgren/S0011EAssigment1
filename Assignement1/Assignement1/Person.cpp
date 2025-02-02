@@ -2,26 +2,8 @@
 #include "MessageDispatcher.h"
 
 void Person::ChangeState(State* newstate, std::string nextstate) {
-	/*State* newState = new State_Work();
-	switch (newstate)
-	{
-	case Sleep:
-		newState = new State_Sleep();
-	case Drink:
-		newState = new State_Drink();
-	case Eat:
-		newState = new State_Eat();
-	case Work:
-		newState = new State_Work();
-	case Social:
-		newState = new State_Social();
-	default:
-		break;
-	}
-	*/
-	//delete previousState;
-	//previousState = currentState;
-
+	 
+	//changing the states
 	nextState = nextstate;
 	currentState->Exit(this);
 	delete currentState;
@@ -31,7 +13,7 @@ void Person::ChangeState(State* newstate, std::string nextstate) {
 
 void Person::Update() {
 	
-	//std::cout << "Thirst" << thirst << "Hunger" << hunger << std::endl;
+	//changes bools values to simulate thirst, hunger, fatigue, socialization
 	if (thirst >= 51) {
 		isThirsty = true;
 	}
@@ -65,7 +47,7 @@ void Person::Update() {
 	}
 	else
 	{
-		
+		//every update if person isn't dead
 		currentState->Execute(this);
 		thirst += jobs.thirstSpeed;
 		hunger += jobs.hungerSpeed;
@@ -90,7 +72,7 @@ int Person::checkFood() {
 }
 void Person::decreaseFood(int amount) {
 	food -= amount;
-	if (food >= 0) { food = 0; }
+	if (food <= 0) { food = 0; }
 }
 
 int Person::checkDrink() {
@@ -98,7 +80,7 @@ int Person::checkDrink() {
 }
 void Person::decreaseDrinks(int amount) {
 	drinks -= amount;
-
+	if (drinks <= 0) { drinks = 0; }
 }
 
 void Person::ChangeLocation(std::string location) {
@@ -163,6 +145,7 @@ bool Person::OnMessage(const Telegram& msg) {
 	switch (msg.message)
 	{
 	case inviteToSocialize:
+		//checking to make sure that the person can make it to the social event
 		if (isHungry == true || isThirsty == true || money < 100) {
 			for (int i = 0; i < EntityMgr->mapsSize(); i++)
 			{
@@ -172,6 +155,7 @@ bool Person::OnMessage(const Telegram& msg) {
 				
 			}
 		}
+		//if they can make send such a message
 		else
 		{
 			for (int i = 0; i < EntityMgr->mapsSize(); i++)

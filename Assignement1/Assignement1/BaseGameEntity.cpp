@@ -9,6 +9,7 @@ BaseGameEntity::BaseGameEntity(int id, string newName)
 
 void BaseGameEntity::setID(int id) 
 {
+	//making sure the id is valid
 	if (id >= nextvalidID) {
 		ID = id;
 		nextvalidID++;

@@ -6,7 +6,7 @@ class EntityManager
 private:
 	typedef std::map<int, BaseGameEntity*> EntityMap;
 private:
-
+	//map of all the entityes
 	EntityMap entityMap;
 	
 public:

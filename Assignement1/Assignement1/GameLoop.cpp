@@ -2,9 +2,10 @@
 
 
 int main() {
+	//making so that the timings can be changed and there is controll over how fast it updates
 	std::vector<int> people;
 	long long tick = 0.0;
-	int TPS = 500;
+	int TPS = 1;
 	const long long TPSDuration = 1000000000.0/TPS;
 	
 
@@ -15,6 +16,7 @@ int main() {
 	auto startTime = std::chrono::system_clock::now();
 	auto lastTime = std::chrono::system_clock::now();
 	auto currentTime = lastTime;
+	//creating the characters
 	Person Per = Person(0, "Per", 2);
 	people.push_back(Per.ID);
 	EntityMgr->registerEntity(&Per);
@@ -73,6 +75,7 @@ int main() {
 				{
 
 					P->Update();
+					//checking if person is dead
 					if (P->dead == true) {
 						std::cout << P->name << " is dead";
 						std::cout << " H: " << P->checkHunger();
@@ -80,7 +83,7 @@ int main() {
 						std::cout << " F: " << P->checkfatigue();
 						std::cout << " S: " << P->checkSocial();
 						std::cout << " M: " << P->checkMoney();
-						int tID = P->ID;
+						//erase from lists
 						EntityMgr->removeeEntity(EntityMgr->GetEntityFromId(P->ID));
 						people.erase(people.begin() + i);
 						for (int i = 0; i < people.size(); i++)

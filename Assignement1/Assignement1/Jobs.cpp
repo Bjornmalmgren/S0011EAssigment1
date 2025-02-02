@@ -8,6 +8,7 @@ void Jobs::selectJobs(int i) {
 	int addon = rand() % 6;
 	srand(i+addon);
 	int randomJob1 = rand() % 6;
+	//give a job to a person with diffrent stats
 	switch (randomJob1)
 	{
 	case 0:
