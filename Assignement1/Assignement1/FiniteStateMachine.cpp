@@ -41,7 +41,7 @@ void State_Sleep::Execute(Person* person) {
 			person->ChangeState(new State_Drink, "Drink");
 		}
 	}
-	else if(person->needsSocialization && person->checkMoney() > 100)
+	else if(person->needsSocialization && person->checkMoney() > 100 && person->people.size() < 1)
 	{
 		//sends a message to all the other chracters to check if they can socialize
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
@@ -135,7 +135,7 @@ void State_Eat::Execute(Person* person) {
 		std::cout << person->name << "is going to buy some drinks " ;
 		person->ChangeState(new State_Drink, "Drink");
 	}
-	else if (person->needsSocialization && person->checkMoney() > 100) {
+	else if (person->needsSocialization && person->checkMoney() > 100 && person->people.size() < 1) {
 		//sends a message to all the other chracters to check if they can socialize
 		std::cout << person->name << "is going to Socialize ";
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
@@ -212,7 +212,7 @@ void State_Work::Execute(Person* person) {
 		
 		//say something
 	}
-	else if (person->needsSocialization && person->checkMoney() > 100) {
+	else if (person->needsSocialization && person->checkMoney() > 100 && person->people.size() < 1) {
 		//sends a message to all the other chracters to check if they can socialize
 		std::cout << person->name << " is going to socialize ";
 		for(int i = 0; i < EntityMgr->mapsSize(); i++)
@@ -297,7 +297,7 @@ void State_Drink::Execute(Person* person) {
 			person->ChangeState(new State_Work, "Work");
 		}
 	}
-	else if (person->needsSocialization && person->checkMoney() > 100) {
+	else if (person->needsSocialization && person->checkMoney() > 100 && person->people.size() < 1) {
 		//sends a message to all the other chracters to check if they can socialize
 		std::cout << person->name << " is going to socialize " ;
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
@@ -438,7 +438,7 @@ void State_Idle::Execute(Person* person) {
 		std::cout << person->name << " is tired time to sleep ";
 		person->ChangeState(new State_Sleep, "Sleep");
 	}
-	else if (person->needsSocialization && person->checkMoney() > 100) {
+	else if (person->needsSocialization && person->checkMoney() > 100 && person->people.size() < 1) {
 		//sends a message to all the other chracters to check if they can socialize
 		std::cout << person->name << "is going to socialize ";
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
@@ -505,7 +505,7 @@ void State_ExtraMoney::Execute(Person* person) {
 
 
 	}
-	else if (person->needsSocialization && person->checkMoney() > 100) {
+	else if (person->needsSocialization && person->checkMoney() > 100 && person->people.size() < 1) {
 		//sends a message to all the other chracters to check if they can socialize
 		std::cout << person->name << "is going to socialize ";
 		for (int i = 0; i < EntityMgr->mapsSize(); i++)
